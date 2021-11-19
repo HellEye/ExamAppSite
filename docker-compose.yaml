@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  examapp:
+    container_name: examapp_react
+    volumes:
+      - "./src:/usr/src"
+      - "./public:/usr/public"
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
