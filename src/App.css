@@ -3,6 +3,9 @@
 *::after {
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
+	transition: background-color 0.2s ease, color 0.2s ease,
+		border-color 0.2s ease;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Comforter+Brush&display=swap");

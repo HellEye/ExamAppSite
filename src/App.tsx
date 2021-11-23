@@ -1,39 +1,41 @@
 import "./App.css"
 import React from "react"
-import Header from "./components/Header/Header.style"
-import { colorsDark, colorsLight, Theme } from "./res/styles/colors"
-import { ThemeProvider } from "styled-components"
-// import ThemeTest from "./components/ThemeTest/ThemeTest.style"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import LandingPage from "./components/LandingPage/LandingPage.style"
-export const ToggleThemeContext = React.createContext(() => {})
+import Header from "./components/Pages/Header/Header.style"
+import { Routes, Route } from "react-router-dom"
+import LandingPage from "./components/Pages/LandingPage/LandingPage.style"
+import CreateTest from "./components/Pages/CreateTest/CreateTest.style"
+import ContentWrapper from "./components/Wrappers/ContentWrapper/ContentWrapper.style"
+// import ThemeTestStyle from "./components/Util/ThemeTest/ThemeTest.style"
+import EditTest from "./components/Pages/EditTest/EditTest.style"
+
+import "react-toastify/dist/ReactToastify.css"
+import Register from "./components/Pages/Register/Register.style"
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import ContextWrapper from "./components/Wrappers/ContextWrapper/ContextWrapper"
+import Login from "./components/Pages/Login/Login.style"
 
 type PropTypes = {
 	className?: string
 }
 function App({ className }: PropTypes) {
-	const [theme, setTheme] = React.useState<Theme>(
-		(localStorage.getItem("theme") as Theme) || "light"
-	)
-	const toggleTheme = React.useCallback(() => {
-		setTheme((oldTheme) => (oldTheme === "light" ? "dark" : "light"))
-	}, [])
-	React.useEffect(() => {
-		localStorage.setItem("theme", theme)
-	}, [theme])
 	return (
-		<ThemeProvider theme={theme === "light" ? colorsLight : colorsDark}>
-			<ToggleThemeContext.Provider value={toggleTheme}>
-				<BrowserRouter>
-					<div className={className}>
-						<Header />
-						<Routes>
-							<Route path="/" element={<LandingPage />} />
-						</Routes>
-					</div>
-				</BrowserRouter>
-			</ToggleThemeContext.Provider>
-		</ThemeProvider>
+		<ContextWrapper>
+			<div className={className}>
+				<Header />
+				<ContentWrapper>
+					<Routes>
+						<Route path="/" element={<LandingPage />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/create" element={<CreateTest />} />
+						{/* TODO */}
+						<Route path="/edit" />
+
+						<Route path="/edit/:id" element={<EditTest />} />
+					</Routes>
+				</ContentWrapper>
+			</div>
+		</ContextWrapper>
 	)
 }
 
